@@ -11,19 +11,39 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * The Class EditActivity.
+ */
 public class EditActivity extends Activity {
+	
+	/** The Item i. */
 	private Item i;
+	
+	/** The EditText data. */
 	private EditText mData;
+	
+	/** The Button save. */
 	private Button mSave;
+	
+	/** The Context ctx. */
 	private Context ctx = this;
+	
+	/** The Datahelper dh. */
 	private DataHelper dh;
 
+	/**
+	 * Prevents the activity from restarted on orientation change
+	 */
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 	}
 
-	/** Called when the activity is first created. */
+	/**
+	 * Called when the activity is first created.
+	 *
+	 * @param savedInstanceState the saved instance state
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,6 +65,9 @@ public class EditActivity extends Activity {
 		});
 	}
 
+	/**
+	 * Save data saves the data and launches the start activity.
+	 */
 	private void saveData() {
 		this.dh = new DataHelper(this);
 		this.dh.updateData(String.valueOf(mData.getText()), i.getId());
@@ -58,6 +81,12 @@ public class EditActivity extends Activity {
 		finish();
 	}
 
+	/**
+	 * onKeyDown will check when the back button is pressed and cancel the opperation
+	 * 
+	 * @param keyCode the code of the key pressed
+	 * @param event the event
+	 */
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			Toast.makeText(ctx, "Changes discarded...", Toast.LENGTH_SHORT)

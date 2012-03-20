@@ -24,23 +24,51 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
+/**
+ * The Class StartActivity.
+ */
 public class StartActivity extends Activity {
+	
+	/** The m list. */
 	private SimpleAdapter mList;
+	
+	/** The dh. */
 	private DataHelper dh;
+	
+	/** The m data. */
 	private EditText mData;
+	
+	/** The m list view. */
 	private ListView mListView;
+	
+	/** The m save. */
 	private Button mSave;
+	
+	/** The ctx. */
 	private Context ctx = this;
+	
+	/** The list. */
 	private List<Item> list;
+	
+	/** The Constant CONTEXT_EDIT. */
 	protected static final int CONTEXT_EDIT = 1;
+	
+	/** The Constant CONTEXT_DELETE. */
 	protected static final int CONTEXT_DELETE = 2;
 
+	/**
+	 * Prevents the activity from restarted on orientation change
+	 */
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 	}
 
-	/** Called when the activity is first created. */
+	/**
+	 * Called when the activity is first created.
+	 *
+	 * @param savedInstanceState the saved instance state
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,6 +91,11 @@ public class StartActivity extends Activity {
 		getData();
 	}
 
+	/**
+	 * Gets the data.
+	 *
+	 * @return the data
+	 */
 	private void getData() {
 		list = new ArrayList<Item>();
 		this.dh = new DataHelper(this);
@@ -104,12 +137,16 @@ public class StartActivity extends Activity {
 		}
 	}
 
+	/**
+	 * Runs when a context item is selected
+	 *
+	 * @param item the menu item
+	 * @return boolean
+	 */
 	public boolean onContextItemSelected(MenuItem item) {
 
 		AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
 				.getMenuInfo();
-		// Object o = mListView.getItemAtPosition(menuInfo.position);
-		// HashMap fullObject = (HashMap) o;
 		switch (item.getItemId()) {
 		case CONTEXT_EDIT:
 			sendEditIntent(list.get(menuInfo.position));
@@ -124,6 +161,9 @@ public class StartActivity extends Activity {
 		return true;
 	}
 
+	/**
+	 * Save data.
+	 */
 	private void saveData() {
 		this.dh = new DataHelper(this);
 		long l = this.dh.insertData(String.valueOf(mData.getText()));
@@ -137,6 +177,9 @@ public class StartActivity extends Activity {
 		}
 	}
 
+	/**
+	 * Delete all.
+	 */
 	private void deleteAll() {
 		this.dh = new DataHelper(this);
 		this.dh.deleteData();
@@ -147,6 +190,11 @@ public class StartActivity extends Activity {
 		finish();
 	}
 
+	/**
+	 * Send edit intent.
+	 *
+	 * @param i the i
+	 */
 	private void sendEditIntent(Item i) {
 		Intent myIntent = new Intent(StartActivity.this, EditActivity.class);
 		Log.d("sqlite", "i:  " + i.getData());
@@ -155,6 +203,11 @@ public class StartActivity extends Activity {
 		finish();
 	}
 
+	/**
+	 * Delete record.
+	 *
+	 * @param i the i
+	 */
 	private void deleteRecord(Item i) {
 		this.dh = new DataHelper(this);
 		this.dh.deleteSingleData(i.getId());
@@ -162,6 +215,12 @@ public class StartActivity extends Activity {
 		getData();
 	}
 
+	/**
+	 * Runs when a options menu is created
+	 *
+	 * @param menu the menu
+	 * @return boolean
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -169,6 +228,12 @@ public class StartActivity extends Activity {
 		return true;
 	}
 
+	/**
+	 * Runs when a menu item is selected
+	 *
+	 * @param item the menu item
+	 * @return boolean
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
